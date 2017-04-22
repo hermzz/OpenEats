@@ -134,10 +134,8 @@ class RecipeImportViewSet(APIView):
                 return Response({'error': '2', 'response': 'Bad URL or URL not supported'})
         return Response({'error': '3', 'response': 'No URL given.'})
 
-class RatingViewSet(viewsets.ModelViewSet):
+class RatingViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.RatingSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly)
 
     def get_queryset(self):
         query = Recipe.objects
@@ -145,15 +143,13 @@ class RatingViewSet(viewsets.ModelViewSet):
         filter = {}
         if 'cuisine' in self.request.query_params:
             try:
-                cuisine = Cuisine.objects.get(slug=self.request.query_params.get('cuisine'))
-                filter['cuisine'] = cuisine
+                filter['cuisine'] = Cuisine.objects.get(slug=self.request.query_params.get('cuisine'))
             except:
                 return []
 
         if 'course' in self.request.query_params:
             try:
-                course = Course.objects.get(slug=self.request.query_params.get('course'))
-                filter['course'] = course
+                filter['course'] = Course.objects.get(slug=self.request.query_params.get('course'))
             except:
                 return []
 

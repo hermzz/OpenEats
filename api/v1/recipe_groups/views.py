@@ -28,8 +28,7 @@ class CuisineViewSet(viewsets.ModelViewSet):
         filter = {}
         if 'course' in self.request.query_params:
             try:
-                course = Course.objects.get(slug=self.request.query_params.get('course'))
-                filter['recipe__course'] = course
+                filter['recipe__course'] = Course.objects.get(slug=self.request.query_params.get('course'))
             except:
                 return []
 
@@ -57,8 +56,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         filter = {}
         if 'cuisine' in self.request.query_params:
             try:
-                cuisine = Cuisine.objects.get(slug=self.request.query_params.get('cuisine'))
-                filter['recipe__cuisine'] = cuisine
+                filter['recipe__cuisine'] = Cuisine.objects.get(slug=self.request.query_params.get('cuisine'))
             except:
                 return []
 
